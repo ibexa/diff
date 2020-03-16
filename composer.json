@@ -1,5 +1,5 @@
 {
-    "name": "sebastian/diff",
+    "name": "ezsystems/diff",
     "description": "Diff implementation",
     "keywords": ["diff", "udiff", "unidiff", "unified diff"],
     "homepage": "https://github.com/sebastianbergmann/diff",
@@ -14,6 +14,9 @@
             "email": "mail@kore-nordmann.de"
         }
     ],
+    "replace": {
+        "sebastian/diff": "*"
+    },
     "prefer-stable": true,
     "config": {
         "platform": {

@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Diff\Utils;
 
 use PHPUnit\Framework\TestCase;
@@ -37,22 +36,19 @@ final class UnifiedDiffAssertTraitIntegrationTest extends TestCase
     }
 
     /**
-     * @param string $fileFrom
-     * @param string $fileTo
-     *
      * @dataProvider provideFilePairsCases
      */
     public function testValidPatches(string $fileFrom, string $fileTo): void
     {
-        $command = \sprintf(
-            'diff -u %s %s > %s',
-            \escapeshellarg(\realpath($fileFrom)),
-            \escapeshellarg(\realpath($fileTo)),
-            \escapeshellarg($this->filePatch)
+        $p = Process::fromShellCommandline('diff -u $from $to > $patch');
+        $p->run(
+            null,
+            [
+                'from'  => \realpath($fileFrom),
+                'to'    => \realpath($fileTo),
+                'patch' => $this->filePatch,
+            ]
         );
-
-        $p = new Process($command);
-        $p->run();
 
         $exitCode = $p->getExitCode();
 
@@ -68,7 +64,7 @@ final class UnifiedDiffAssertTraitIntegrationTest extends TestCase
             $exitCode,
             \sprintf(
                 "Command exec. was not successful:\n\"%s\"\nOutput:\n\"%s\"\nStdErr:\n\"%s\"\nExit code %d.\n",
-                $command,
+                $p->getCommandLine(),
                 $p->getOutput(),
                 $p->getErrorOutput(),
                 $p->getExitCode()

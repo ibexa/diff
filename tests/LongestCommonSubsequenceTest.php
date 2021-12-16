@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Diff;
 
 use PHPUnit\Framework\TestCase;
@@ -35,7 +34,7 @@ abstract class LongestCommonSubsequenceTest extends TestCase
     protected function setUp(): void
     {
         $this->memoryLimit = \ini_get('memory_limit');
-        \ini_set('memory_limit', '256M');
+        \ini_set('memory_limit', '-1');
 
         $this->implementation = $this->createImplementation();
     }
@@ -194,8 +193,5 @@ abstract class LongestCommonSubsequenceTest extends TestCase
         $this->assertCount(0, $diff);
     }
 
-    /**
-     * @return LongestCommonSubsequenceCalculator
-     */
     abstract protected function createImplementation(): LongestCommonSubsequenceCalculator;
 }
